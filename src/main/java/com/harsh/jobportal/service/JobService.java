@@ -10,28 +10,33 @@ import java.util.List;
 @Service
 public class JobService {
 
+
     @Autowired
     private JobRepo repo;
 
     public  void  addJob(JobPost jobPost){
-        repo.addJob(jobPost);
+        repo.save(jobPost);
 
     }
 
     public List<JobPost> getAllJobs(){
-        return repo.getAllJobs();
+        return repo.findAll();
 
     }
 
     public  JobPost getJobById(int id){
-        return repo.jobById(id);
+        return repo.findById(id).orElse((new JobPost()));
     }
 
     public void updateJob(JobPost job) {
-        repo.updateJob(job);
+        repo.save(job);
     }
 
     public void deleteJob(int id) {
-        repo.deleteJob(id);
+        repo.deleteById(id);
+    }
+
+    public List<JobPost> search(String keyword) {
+       return  repo.findByPostProfileContainingOrPostDescContaining(keyword , keyword);
     }
 }

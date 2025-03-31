@@ -1,6 +1,5 @@
 package com.harsh.jobportal;
 
-
 import com.harsh.jobportal.modal.JobPost;
 import com.harsh.jobportal.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,41 +8,41 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins = "frontend url-url")
+//@CrossOrigin(origins = "frontend-url")
 public class JobRestController {
 
     @Autowired
-    private JobService service;
+    private JobService jobService;
 
-    @GetMapping("jobposts")
-    public List<JobPost> getAllJobs(){
-        return service.getAllJobs();
+    @GetMapping("/jobposts")
+    public List<JobPost> getAllJobs() {
+        return jobService.getAllJobs();
     }
 
-    @PostMapping("addjob")
-    public JobPost addJob(@RequestBody  JobPost jobPost){
-            service.addJob(jobPost);
-       return service.getJobById(jobPost.getPostId());
+    @PostMapping("/addjob")
+    public JobPost addJob(@RequestBody JobPost jobPost) {
+        jobService.addJob(jobPost);
+        return jobService.getJobById(jobPost.getPostId());
     }
 
-    @GetMapping("job/{id}")
-    public JobPost getJobById(@PathVariable int id){
-        System.out.println(id);
-        return service.getJobById(id);
+    @GetMapping("/job/{id}")
+    public JobPost getJobById(@PathVariable int id) {
+        return jobService.getJobById(id);
     }
 
-    @PutMapping("addjob")
-    public void updateJob(@RequestBody JobPost job ){
-        service.updateJob(job);
-
+    @GetMapping("/job/keyword/{keyword}")
+    public List<JobPost> searchByKeyword(@PathVariable String keyword) {
+        return jobService.search(keyword);
     }
 
-    @DeleteMapping("job/{id}")
-    public String deleteJob(@PathVariable int id){
-        service.deleteJob(id);
+    @PutMapping("/addjob")
+    public void updateJob(@RequestBody JobPost job) {
+        jobService.updateJob(job);
+    }
+
+    @DeleteMapping("/job/{id}")
+    public String deleteJob(@PathVariable int id) {
+        jobService.deleteJob(id);
         return "Deleted";
-
     }
-
-
 }
