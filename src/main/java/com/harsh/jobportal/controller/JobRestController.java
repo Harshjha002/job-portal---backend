@@ -1,4 +1,4 @@
-package com.harsh.jobportal;
+package com.harsh.jobportal.controller;
 
 import com.harsh.jobportal.modal.JobPost;
 import com.harsh.jobportal.service.JobService;
